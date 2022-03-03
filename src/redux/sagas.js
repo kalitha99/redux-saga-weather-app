@@ -4,7 +4,7 @@ import { getWeather } from "./api";
 
 export function* onLoadWeatherAsync({ payload: query }) {
   try {
-    console.log('query',query);
+    console.log("query", query);
     const response = yield call(getWeather, query);
     yield put({ type: types.FETCH_WEATHER_SUCESSS, payload: response.data });
   } catch (error) {

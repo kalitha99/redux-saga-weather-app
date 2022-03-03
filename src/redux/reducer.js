@@ -12,6 +12,7 @@ const weatherReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: "",
       };
 
     case types.FETCH_WEATHER_SUCESSS:
@@ -19,6 +20,7 @@ const weatherReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         weather: action.payload,
+        error: "",
       };
 
     case types.FETCH_WEATHER_FALI:
