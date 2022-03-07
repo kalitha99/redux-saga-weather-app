@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import * as types from "./redux/actiontTypes";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,9 @@ function Weather() {
   const { weather, error } = useSelector((state) => state.data); //recipe reducer is with name data so state.data
 
   console.log("state", weather);
+  const lat = weather?.coord.lat
+  const lon = weather?.coord.lon
+  const city = weather?.name
 
   useEffect(() => {
     dispatch({ type: types.FETCH_WEATHER_START, payload: query });
@@ -53,7 +57,7 @@ function Weather() {
     <div>
       <h2>Weather App</h2>
       <form className={classes.root} noValidate autoComplete="off">
-        <TextField
+        <TextField 
           id="outlined-basic"
           label="Search City"
           variant="outlined"
@@ -76,23 +80,22 @@ function Weather() {
         <h1 style={{ color: "orange" }}>Check the name of the City again</h1>
       ) : null}
 
-      <br />
-      <br />
-      <br />
+     
+      
 
       <React.Fragment>
         <CssBaseline />
         <Container maxWidth="sm">
           <Typography
             component="div"
-            style={{ color: "black", height: "200px" }}
+            style={{ color: "white", height: "200px" }}
           >
-            <br />
+            
             <h1>
               {weather?.name},{weather?.sys.country}
             </h1>
             {weather?.weather.map((item, index) => (
-              <div key={index}>
+              <div key={index}style={{ color: "white" }}>
                 <h2>{item.description} </h2>
                 <img
                   src={`http://openweathermap.org/img/wn/${item.icon}@2x.png`}
@@ -108,6 +111,12 @@ function Weather() {
               Min temp: {weather?.main.temp_min}°C
             </h4>
             <h4>Wind speed: {weather?.wind.speed}Km/h</h4>
+            <Link  to={{
+              pathname:'/forecast',
+              state:{lon:lon,lat:lat,city:city}
+            }}>
+              Forecast
+            </Link>
           </Typography>
         </Container>
       </React.Fragment>
